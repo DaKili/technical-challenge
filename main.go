@@ -1,34 +1,53 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"math"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
 // Main function that reads the birthyear from the args, calculates the current age,
 // calculates the next age that is prime and adds it to the birth year.
 func main() {
-	birthyear := getYearFromOs()
-	age := getAge(birthyear)
-	nextPrime := nextPrimeNumber(age)
-	fmt.Println(birthyear + nextPrime)
+	fmt.Println("Enter a birthyear. (q to quit)") // Only prompt once.
+	for {
+		birthyear, quit := getYearFromConsole()
+		if quit {
+			return
+		}
+
+		age := getAge(birthyear)
+		nextPrime := nextPrimeNumber(age)
+		fmt.Printf("%v\n\n", birthyear+nextPrime)
+	}
 }
 
-// Read and parse the program arguments. Only one int argument is allowed.
-func getYearFromOs() int {
-	if len(os.Args) != 2 {
-		log.Fatal("Exactly one command-line parameter required.")
-	}
-	year, err := strconv.Atoi(os.Args[1])
-	if err != nil {
-		log.Fatalf("Could not parse '%v' to an integer.\n", os.Args[1])
-	}
+func getYearFromConsole() (int, bool) {
+	reader := bufio.NewReader(os.Stdin)
+	for {
+		input, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Printf("Error reading input. Please enter only one number.\n\n")
+			continue
+		}
+		input = strings.TrimRight(input, "\n")
 
-	return year
+		if input == "q" {
+			return 0, true
+		}
+
+		ret, err := strconv.Atoi(input)
+		if err != nil {
+			fmt.Printf("Could not parse '%v' to an integer.\n\n", input)
+			continue
+		}
+		return ret, false
+	}
 }
 
 // Calculate current age of someone born in the given year. Assert positive age.
