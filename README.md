@@ -8,4 +8,4 @@ Make sure to have a up-to-date version of golang installed. I developed this in 
 ### run the program
 1. Clone the repository
 2. Navigate to the local repository
-3. execute ```go run . <parameter>```, with \<parameter\> replaced with the desired birthyear
+3. execute ```go run . <parameter>```, with \<parameter\> replaced by the desired birthyear
