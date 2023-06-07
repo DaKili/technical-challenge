@@ -27,6 +27,7 @@ func main() {
 	}
 }
 
+// Input loop for the user to put in multiple inputs. Returns only on valid inputs (integer, q for quit).
 func getYearFromConsole() (int, bool) {
 	reader := bufio.NewReader(os.Stdin)
 	for {
